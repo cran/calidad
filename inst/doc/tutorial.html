@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>basic usage</title>
+
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">basic usage</h1>
+
+
+
+<div id="tutorial-package-calidad" class="section level1">
+<h1>Tutorial package calidad</h1>
+<p>The package aims to implement in a simple way the methodologies of <a href="https://www.ine.cl/docs/default-source/documentos-de-trabajo/20200318-lineamientos-medidas-de-precisi%C3%B3n.pdf?sfvrsn=f1ab2dbe_4">INE Chile</a> and <a href="https://repositorio.cepal.org/bitstream/handle/11362/45681/S2000293_es.pdf?sequence=4&amp;isAllowed=y">ECLAC</a> for the quality evaluation of estimates from household surveys.</p>
+<p>This tutorial shows the basic use of the package and includes the main functions to create the necessary inputs to implement both quality standards.</p>
+<div id="data-edition" class="section level2">
+<h2>Data edition</h2>
+<p>We will use two datasets:</p>
+<ul>
+<li>Encuesta Nacional de Empleo (efm 2020)<br />
+</li>
+<li>VIII Encuesta de Presupuestos Familiares</li>
+</ul>
+<p>Both datasets are loaded into the package and they can be used when the package is loaded in the session <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. The data edition in the case of ENE has the purpuse of creating some subpopulations (work force, unemployed and unemployed).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(survey)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(calidad)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>ene &lt;-<span class="st"> </span>ene <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fdt =</span> <span class="kw">if_else</span>(cae_especifico <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>cae_especifico <span class="op">&lt;=</span><span class="st"> </span><span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="co"># labour force</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>         <span class="dt">ocupado =</span> <span class="kw">if_else</span>(cae_especifico <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>cae_especifico <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="co"># employed</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>         <span class="dt">desocupado =</span> <span class="kw">if_else</span>(cae_especifico <span class="op">&gt;=</span><span class="st"> </span><span class="dv">8</span> <span class="op">&amp;</span><span class="st"> </span>cae_especifico <span class="op">&lt;=</span><span class="st"> </span><span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="co"># unemployed</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># One row per household</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>epf &lt;-<span class="st"> </span>epf_personas <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="st">  </span><span class="kw">group_by</span>(folio) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="st">  </span><span class="kw">ungroup</span>()</span></code></pre></div>
+</div>
+<div id="sample-design" class="section level2">
+<h2>Sample design</h2>
+<p>Before starting to use the package, it is necessary to declare the sample design of the survey, for which we use the <code>survey</code> package. The primary sample unit, the stratum and weights must be declared. It is also possible to use a design with only weights, nevertheless in that case the variance will be estimated under simple random sampling assumption. In this case we will declare a complex design for the two surveys (EPF and ENE). Additionally, it may be useful to declare an option for strata that only have one PSU.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Store original options</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>old_options &lt;-<span class="st">  </span><span class="kw">options</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Complex sample design for ENE</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>dc_ene &lt;-<span class="st"> </span><span class="kw">svydesign</span>(<span class="dt">ids =</span> <span class="op">~</span>conglomerado , <span class="dt">strata =</span> <span class="op">~</span>estrato_unico, <span class="dt">data =</span> ene, <span class="dt">weights =</span> <span class="op">~</span>fact_cal)</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># Complex sample design for EPF</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>dc_epf &lt;-<span class="st"> </span><span class="kw">svydesign</span>(<span class="dt">ids =</span> <span class="op">~</span>varunit, <span class="dt">strata =</span> <span class="op">~</span>varstrat, <span class="dt">data =</span> epf, <span class="dt">weights =</span> <span class="op">~</span>fe)</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="kw">options</span>(<span class="dt">survey.lonely.psu =</span> <span class="st">&quot;certainty&quot;</span>)</span></code></pre></div>
+</div>
+<div id="inputs-creation" class="section level2">
+<h2>Inputs creation</h2>
+<div id="national-labour-survey-part-1" class="section level3">
+<h3>National Labour Survey (part 1)</h3>
+<p>To assess the quality of an estimate, the <a href="https://www.ine.cl/docs/default-source/documentos-de-trabajo/20200318-lineamientos-medidas-de-precisi%C3%B3n.pdf?sfvrsn=f1ab2dbe_4">INE methodology</a> establishes differentiated criteria for estimates of proportion (or ratio), on the one hand, and estimates of mean, size and total, on the other. In the case of proportion estimation, it is necessary to have the sample size, the degrees of freedom and the standard error. The other estimates require the sample size, the degrees of freedom, and the coefficient of variation.</p>
+<p>The package includes separate functions to create the inputs for estimates of <strong>mean, proportion, totals and size</strong>. The following example shows how the proportion and size functions are used.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>insumos_prop &lt;-<span class="st"> </span><span class="kw">create_prop</span>(<span class="dt">var =</span> <span class="st">&quot;desocupado&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;sexo&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span>  dc_ene) <span class="co"># proportion of unemployed people</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>insumos_total &lt;-<span class="st">  </span><span class="kw">create_size</span>(<span class="dt">var =</span> <span class="st">&quot;desocupado&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;sexo&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span>  dc_ene) <span class="co"># number of unemployed people</span></span></code></pre></div>
+<ul>
+<li><code>var</code>: variable to be estimated. Must be a dummy variable</li>
+<li><code>domains</code>: required domains.</li>
+<li><code>subpop</code>: reference subpopulation. It is optional and works as a filter (must be a dummy variable)</li>
+<li><code>design</code>: sample design</li>
+</ul>
+<p>The function returns all the neccesary inputs to implement the standard</p>
+<p>To get more domains, we can use the “+” symbol as follows:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>desagregar &lt;-<span class="st"> </span><span class="kw">create_prop</span>(<span class="dt">var =</span> <span class="st">&quot;desocupado&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;sexo+region&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span>  dc_ene)</span></code></pre></div>
+</div>
+<div id="household-budget-survey-part-2" class="section level3">
+<h3>Household Budget Survey (part 2)</h3>
+<p>In some cases it may be of interest to assess the quality of a sum. For example, the sum of all the income of the EPF at the geographical area level (Gran Santiago and other regional capitals). For this, there is the <code>create_total</code> function. This function receives a continuous variable such as hours, expense, or income and generates totals at the requested level. The ending “with” of the function alludes to the fact that a continuous variable is being used.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>insumos_suma &lt;-<span class="st">  </span><span class="kw">create_total</span>(<span class="dt">var =</span> <span class="st">&quot;gastot_hd&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;zona&quot;</span>, <span class="dt">design =</span>  dc_epf)</span></code></pre></div>
+<p>If we want to evaluate the estimate of a mean, we have the function <code>create_mean</code>. In this case, we will calculate the average expenditure of households, according to geographical area.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>insumos_media &lt;-<span class="st">  </span><span class="kw">create_mean</span>(<span class="dt">var =</span> <span class="st">&quot;gastot_hd&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;zona&quot;</span>, <span class="dt">design =</span>  dc_epf)</span></code></pre></div>
+<p>The default usage is not to disaggregate, in which case the functions should be used as follows:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># ENE dataset</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>insumos_prop_nacional &lt;-<span class="st"> </span><span class="kw">create_prop</span>(<span class="st">&quot;desocupado&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span> dc_ene)</span>
+<span id="cb8-3"><a href="#cb8-3"></a>insumos_total_nacional &lt;-<span class="st">  </span><span class="kw">create_total</span>(<span class="st">&quot;desocupado&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span> dc_ene)</span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co"># EPF dataset</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>insumos_suma_nacional &lt;-<span class="st"> </span><span class="kw">create_total</span>(<span class="st">&quot;gastot_hd&quot;</span>, <span class="dt">design =</span> dc_epf)</span>
+<span id="cb8-6"><a href="#cb8-6"></a>insumos_media_nacional &lt;-<span class="st">  </span><span class="kw">create_mean</span>(<span class="st">&quot;gastot_hd&quot;</span>, <span class="dt">design =</span> dc_epf)</span></code></pre></div>
+</div>
+</div>
+<div id="evaluation" class="section level2">
+<h2>Evaluation</h2>
+<p>Once the inputs have been generated, we can do the evaluation. To do this, we use the <code>evaluate</code> function.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>evaluacion_prop &lt;-<span class="st"> </span><span class="kw">evaluate</span>(insumos_prop)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>evaluacion_tot &lt;-<span class="st"> </span><span class="kw">evaluate</span>(insumos_total)</span>
+<span id="cb9-3"><a href="#cb9-3"></a>evaluacion_suma &lt;-<span class="st"> </span><span class="kw">evaluate</span>(insumos_suma)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>evaluacion_media &lt;-<span class="st"> </span><span class="kw">evaluate</span>(insumos_media)</span></code></pre></div>
+<p>The output is a <code>dataframe</code> that, in addition to containing the information already generated, includes a column that indicates whether the estimate is unreliable, less reliable or reliable.</p>
+<p>The function <code>evaluate</code> has a parameter that allows us to know if the table should be published or not. Following the criteria of the standard, if more than 50% of the estimates of a table are not reliable, it should not be published.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Desempleo desagregado por region</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>desagregar &lt;-<span class="st"> </span><span class="kw">create_size</span>(<span class="dt">var =</span> <span class="st">&quot;desocupado&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;region&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span>  dc_ene)</span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co"># Evaluar tabulado</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>evaluacion_tot_desagreg &lt;-<span class="st"> </span><span class="kw">evaluate</span>(desagregar, <span class="dt">publicar =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Reset original options</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">options</span>(old_options)</span></code></pre></div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>The data contained within the package has some editions. It is important to note that haven::labelled objects may have some collision with quality functions. If you want to import a dta file, all variables that are of type haven::labelled must be converted to numeric or character.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
