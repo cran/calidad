@@ -55,7 +55,10 @@ ene <- ene %>%
 dc_ene <- survey::svydesign(ids = ~conglomerado, strata = ~estrato_unico, data = ene, weights = ~fact_cal)
 
 # Diseño enusc
-dc_enusc <- survey::svydesign(ids = ~Conglomerado, strata = ~VarStrat, data = enusc, weights = ~Fact_Pers)
+dc_enusc <- survey::svydesign(ids = ~Conglomerado,
+                              strata = ~VarStrat,
+                              data = enusc %>% dplyr::mutate(enc_region = as.character(enc_region)),
+                              weights = ~Fact_Pers)
 
 ##########################
 # Testear las estimaciones
@@ -115,7 +118,7 @@ test_that("conteo df diseño complejo, versión INE, con desagregación", {
 
 # Calcular con el enfoque de CEPAL con desagregación
 
-df <-  create_size("VA_DC", domains =  "enc_region+rph_sexo", design = dc_enusc,df_type = "cepal")
+df <-  create_size("VA_DC", domains =  "enc_region+rph_sexo", design = dc_enusc, df_type = "cepal")
 
 true_upm <- dc_enusc$variables %>%
   dplyr::group_by(rph_sexo, enc_region, Conglomerado) %>%

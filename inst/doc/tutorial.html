@@ -12,7 +12,7 @@
 
 
 
-<title>basic usage</title>
+<title>Usage</title>
 
 <script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
 // v0.0.1
@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">basic usage</h1>
+<h1 class="title toc-ignore">Usage</h1>
 
 
 
@@ -399,37 +399,40 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>The function returns all the neccesary inputs to implement the standard</p>
 <p>To get more domains, we can use the “+” symbol as follows:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>desagregar &lt;-<span class="st"> </span><span class="kw">create_prop</span>(<span class="dt">var =</span> <span class="st">&quot;desocupado&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;sexo+region&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span>  dc_ene)</span></code></pre></div>
+<p>A useful parameter is <code>eclac_input</code>. It allows to return the ECLAC inputs. By default this parameter is FALSE and with the option TRUE we can activate it.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2"></a>eclac_inputs &lt;-<span class="st">  </span><span class="kw">create_prop</span>(<span class="dt">var =</span> <span class="st">&quot;desocupado&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;sexo+region&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span>  dc_ene, <span class="dt">eclac_input =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 </div>
 <div id="household-budget-survey-part-2" class="section level3">
 <h3>Household Budget Survey (part 2)</h3>
 <p>In some cases it may be of interest to assess the quality of a sum. For example, the sum of all the income of the EPF at the geographical area level (Gran Santiago and other regional capitals). For this, there is the <code>create_total</code> function. This function receives a continuous variable such as hours, expense, or income and generates totals at the requested level. The ending “with” of the function alludes to the fact that a continuous variable is being used.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>insumos_suma &lt;-<span class="st">  </span><span class="kw">create_total</span>(<span class="dt">var =</span> <span class="st">&quot;gastot_hd&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;zona&quot;</span>, <span class="dt">design =</span>  dc_epf)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>insumos_suma &lt;-<span class="st">  </span><span class="kw">create_total</span>(<span class="dt">var =</span> <span class="st">&quot;gastot_hd&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;zona&quot;</span>, <span class="dt">design =</span>  dc_epf)</span></code></pre></div>
 <p>If we want to evaluate the estimate of a mean, we have the function <code>create_mean</code>. In this case, we will calculate the average expenditure of households, according to geographical area.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>insumos_media &lt;-<span class="st">  </span><span class="kw">create_mean</span>(<span class="dt">var =</span> <span class="st">&quot;gastot_hd&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;zona&quot;</span>, <span class="dt">design =</span>  dc_epf)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>insumos_media &lt;-<span class="st">  </span><span class="kw">create_mean</span>(<span class="dt">var =</span> <span class="st">&quot;gastot_hd&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;zona&quot;</span>, <span class="dt">design =</span>  dc_epf)</span></code></pre></div>
 <p>The default usage is not to disaggregate, in which case the functions should be used as follows:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># ENE dataset</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>insumos_prop_nacional &lt;-<span class="st"> </span><span class="kw">create_prop</span>(<span class="st">&quot;desocupado&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span> dc_ene)</span>
-<span id="cb8-3"><a href="#cb8-3"></a>insumos_total_nacional &lt;-<span class="st">  </span><span class="kw">create_total</span>(<span class="st">&quot;desocupado&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span> dc_ene)</span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="co"># EPF dataset</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a>insumos_suma_nacional &lt;-<span class="st"> </span><span class="kw">create_total</span>(<span class="st">&quot;gastot_hd&quot;</span>, <span class="dt">design =</span> dc_epf)</span>
-<span id="cb8-6"><a href="#cb8-6"></a>insumos_media_nacional &lt;-<span class="st">  </span><span class="kw">create_mean</span>(<span class="st">&quot;gastot_hd&quot;</span>, <span class="dt">design =</span> dc_epf)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># ENE dataset</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>insumos_prop_nacional &lt;-<span class="st"> </span><span class="kw">create_prop</span>(<span class="st">&quot;desocupado&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span> dc_ene)</span>
+<span id="cb9-3"><a href="#cb9-3"></a>insumos_total_nacional &lt;-<span class="st">  </span><span class="kw">create_total</span>(<span class="st">&quot;desocupado&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span> dc_ene)</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># EPF dataset</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>insumos_suma_nacional &lt;-<span class="st"> </span><span class="kw">create_total</span>(<span class="st">&quot;gastot_hd&quot;</span>, <span class="dt">design =</span> dc_epf)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>insumos_media_nacional &lt;-<span class="st">  </span><span class="kw">create_mean</span>(<span class="st">&quot;gastot_hd&quot;</span>, <span class="dt">design =</span> dc_epf)</span></code></pre></div>
 </div>
 </div>
 <div id="evaluation" class="section level2">
 <h2>Evaluation</h2>
 <p>Once the inputs have been generated, we can do the evaluation. To do this, we use the <code>evaluate</code> function.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>evaluacion_prop &lt;-<span class="st"> </span><span class="kw">evaluate</span>(insumos_prop)</span>
-<span id="cb9-2"><a href="#cb9-2"></a>evaluacion_tot &lt;-<span class="st"> </span><span class="kw">evaluate</span>(insumos_total)</span>
-<span id="cb9-3"><a href="#cb9-3"></a>evaluacion_suma &lt;-<span class="st"> </span><span class="kw">evaluate</span>(insumos_suma)</span>
-<span id="cb9-4"><a href="#cb9-4"></a>evaluacion_media &lt;-<span class="st"> </span><span class="kw">evaluate</span>(insumos_media)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>evaluacion_prop &lt;-<span class="st"> </span><span class="kw">evaluate</span>(insumos_prop)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>evaluacion_tot &lt;-<span class="st"> </span><span class="kw">evaluate</span>(insumos_total)</span>
+<span id="cb10-3"><a href="#cb10-3"></a>evaluacion_suma &lt;-<span class="st"> </span><span class="kw">evaluate</span>(insumos_suma)</span>
+<span id="cb10-4"><a href="#cb10-4"></a>evaluacion_media &lt;-<span class="st"> </span><span class="kw">evaluate</span>(insumos_media)</span></code></pre></div>
 <p>The output is a <code>dataframe</code> that, in addition to containing the information already generated, includes a column that indicates whether the estimate is unreliable, less reliable or reliable.</p>
 <p>The function <code>evaluate</code> has a parameter that allows us to know if the table should be published or not. Following the criteria of the standard, if more than 50% of the estimates of a table are not reliable, it should not be published.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Desempleo desagregado por region</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>desagregar &lt;-<span class="st"> </span><span class="kw">create_size</span>(<span class="dt">var =</span> <span class="st">&quot;desocupado&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;region&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span>  dc_ene)</span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="co"># Evaluar tabulado</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a>evaluacion_tot_desagreg &lt;-<span class="st"> </span><span class="kw">evaluate</span>(desagregar, <span class="dt">publicar =</span> T)</span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Reset original options</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">options</span>(old_options)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Desempleo desagregado por region</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>desagregar &lt;-<span class="st"> </span><span class="kw">create_size</span>(<span class="dt">var =</span> <span class="st">&quot;desocupado&quot;</span>, <span class="dt">domains =</span> <span class="st">&quot;region&quot;</span>, <span class="dt">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="dt">design =</span>  dc_ene)</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co"># Evaluar tabulado</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>evaluacion_tot_desagreg &lt;-<span class="st"> </span><span class="kw">evaluate</span>(desagregar, <span class="dt">publicar =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Reset original options</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">options</span>(old_options)</span></code></pre></div>
 </div>
 </div>
 <div class="footnotes">

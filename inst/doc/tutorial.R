@@ -41,6 +41,10 @@ insumos_total
 ## -----------------------------------------------------------------------------
 desagregar <- create_prop(var = "desocupado", domains = "sexo+region", subpop = "fdt", design =  dc_ene)
 
+## ---- eval=F------------------------------------------------------------------
+#  
+#  eclac_inputs <-  create_prop(var = "desocupado", domains = "sexo+region", subpop = "fdt", design =  dc_ene, eclac_input = TRUE)
+
 ## ---- eval=T, warning=FALSE---------------------------------------------------
 insumos_suma <-  create_total(var = "gastot_hd", domains = "zona", design =  dc_epf)
 

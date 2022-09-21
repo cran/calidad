@@ -62,7 +62,7 @@ evaluate <- function(table, publish = FALSE, scheme = c("chile", "cepal") , ...)
     evaluation <- evaluate_ine(table, params, class(table))
 
 
-    # Criterio general para la publicación del tabulado INE
+    # General criteria for the publication of the INE table
     if (publish == TRUE) {
       evaluation <- publish_table(evaluation)
     }
@@ -70,10 +70,14 @@ evaluate <- function(table, publish = FALSE, scheme = c("chile", "cepal") , ...)
     #  CEPAL Standard
   } else if (scheme == "cepal") {
 
-
     # Check that all the inputs are available
-    check_ess <- names(table) %>%  stringr::str_detect(pattern = "ess") %>% sum()
-    if (check_ess != 1) {stop("ess must be used!")}
+    check_cepal_inputs(table, "ess")
+    check_cepal_inputs(table, "unweighted")
+    if (sum(class(table) %in% c( "calidad.prop")) == 1 ) {
+      check_cepal_inputs(table, "log_cv")
+    }
+
+
 
     # Combine defaults params with user inputs
     params <- combine_params(default_params_cepal, user_params)
