@@ -11,7 +11,8 @@ get_survey_table(
   estimation = "mean",
   env = parent.frame(),
   fun,
-  denom = NULL
+  denom = NULL,
+  type_est = "all"
 )
 }
 \arguments{
@@ -23,11 +24,13 @@ get_survey_table(
 
 \item{estimation}{\code{string} indicating if the mean must be calculated}
 
-\item{env}{\code{environment} parent frame}
+\item{env}{parent environment}
 
 \item{fun}{function required regarding the estimation}
 
 \item{denom}{denominator. This parameter works for the ratio estimation}
+
+\item{type_est}{type of estimation: all or size}
 }
 \value{
 \code{dataframe} containing  main results from survey

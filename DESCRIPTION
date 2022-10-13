@@ -1,7 +1,7 @@
 Package: calidad
 Type: Package
 Title: Assesses the Quality of Estimates Made by Complex Sample Designs
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
       person(given = "Klaus",
         family = "Lehmann",
@@ -31,10 +31,10 @@ VignetteBuilder: knitr
 Depends: R (>= 3.5.0)
 Imports: rlang, dplyr, purrr, survey, kableExtra, stringr, tidyr, haven
 NeedsCompilation: no
-Packaged: 2022-09-21 19:45:19 UTC; klehm
+Packaged: 2022-10-13 18:53:01 UTC; klehm
 Author: Klaus Lehmann [aut, cre],
   Ricardo Pizarro [aut],
   Ignacio Agloni [ctb]
 Maintainer: Klaus Lehmann <klehmann@fen.uchile.cl>
 Repository: CRAN
-Date/Publication: 2022-09-21 20:00:02 UTC
+Date/Publication: 2022-10-13 19:12:35 UTC

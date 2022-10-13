@@ -23,7 +23,7 @@ dc_ene <- survey::svydesign(ids = ~conglomerado, strata = ~estrato_unico, data =
 ############
 
 # National level with denominator
-expect_error(create_prop(var = "mujer",  denominador = "hombre", design = dc_ene, eclac_input = T),
+expect_error(create_prop(var = "mujer",  denominator = "hombre", design = dc_ene, eclac_input = T),
                "eclac approach is not allowed with denominator")
 
 # INE Chile Standard for mean
@@ -33,12 +33,26 @@ test <- evaluate(test1, publish = T)
 
 # INE Chile Standard for proportion
 test2 <-  create_prop("desocupado", domains =  "region+sexo", design = dc_ene, deff = T, ess = T, log_cv = T, unweighted = T)
+
+x <- survey::svyby(~desocupado, by = ~region+sexo, design = dc_ene, FUN = survey::svymean)
+test_cv <- survey::cv(x)
+
+test_that("cv calculado correctamente", {
+  expect_equal(sum(test2$cv == test_cv), length(test_cv) )
+})
+
+
 test2_sin_log <-  create_prop("desocupado", domains =  "region+sexo", design = dc_ene, deff = T, ess = T, log_cv = F, unweighted = T)
 test <- evaluate(test2)
 
 # INE Chile Standard for size
 test3 <-  create_size("desocupado", domains =  "region", design = dc_ene, deff = T, ess = T, unweighted = T)
 test <- evaluate(test3, publish = T)
+
+test_that("Ningún valor de deff es infinito", {
+  expect_equal(sum(test3$deff == Inf) , 0)
+})
+
 
 
 # INE Chile Standard for total
@@ -48,23 +62,40 @@ test_ine <- evaluate(test4, publish = T)
 
 
 # CEPAL standard with default parameters
-test <- evaluate(test1, scheme = "cepal")
-test <- evaluate(test2, scheme = "cepal")
-test <- evaluate(test3, scheme = "cepal")
-test <- evaluate(test4, scheme = "cepal")
+test <- evaluate(test1, scheme = "eclac")
+test <- evaluate(test2, scheme = "eclac")
+test <- evaluate(test3, scheme = "eclac")
+test <- evaluate(test4, scheme = "eclac")
 
 #
 
 # Proportion without log_cv
-expect_error(evaluate(test2_sin_log, scheme = "cepal"),
+expect_error(evaluate(test2_sin_log, scheme = "eclac"),
              "log_cv must be used!")
+
+
+eclac <-  create_size("desocupado", domains =  "region", design = dc_ene, deff = T, ess = T,
+                      unweighted = T, df_type = "eclac")
+
+test <- evaluate(eclac, scheme = "eclac", unweighted = 150 )
+
+test_that("se caigan estimaciones por conteo no ponerado en size", {
+  expect_equal(sum(test$label == "supress") , 9)
+
+})
 
 
 
 # CEPAL standard with custom parameters
-test <- evaluate(test1, scheme = "cepal", unweighted = 500)
-test <- evaluate(test1, scheme = "cepal", ess  = 200 )
-test <- evaluate(test2, scheme = "cepal", ess  = 200, df = 127 )
+test <- evaluate(test1, scheme = "eclac", unweighted = 500)
+test <- evaluate(test1, scheme = "eclac", ess  = 200 )
+test <- evaluate(test2, scheme = "eclac", ess  = 200, df = 127 )
+
+test_that("NA in label variable", {
+  expect_equal( sum(is.na(test$label) == FALSE), dim(test)[1] )
+})
+
+
 
 
 # html output
