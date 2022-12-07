@@ -1,7 +1,7 @@
 Package: calidad
 Type: Package
 Title: Assesses the Quality of Estimates Made by Complex Sample Designs
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: c(
       person(given = "Klaus",
         family = "Lehmann",
@@ -25,16 +25,16 @@ Description: Assesses the quality of estimates made by complex sample designs,
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Suggests: knitr, rmarkdown, testthat
 VignetteBuilder: knitr
 Depends: R (>= 3.5.0)
 Imports: rlang, dplyr, purrr, survey, kableExtra, stringr, tidyr, haven
 NeedsCompilation: no
-Packaged: 2022-10-13 18:53:01 UTC; klehm
+Packaged: 2022-12-06 14:28:45 UTC; klehmannm
 Author: Klaus Lehmann [aut, cre],
   Ricardo Pizarro [aut],
   Ignacio Agloni [ctb]
 Maintainer: Klaus Lehmann <klehmann@fen.uchile.cl>
 Repository: CRAN
-Date/Publication: 2022-10-13 19:12:35 UTC
+Date/Publication: 2022-12-07 20:50:13 UTC

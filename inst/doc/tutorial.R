@@ -60,16 +60,16 @@ insumos_suma_nacional <- create_total("gastot_hd", design = dc_epf)
 insumos_media_nacional <-  create_mean("gastot_hd", design = dc_epf)
 
 ## ---- eval=T, warning=FALSE---------------------------------------------------
-evaluacion_prop <- evaluate(insumos_prop)
-evaluacion_tot <- evaluate(insumos_total)
-evaluacion_suma <- evaluate(insumos_suma)
-evaluacion_media <- evaluate(insumos_media)
+evaluacion_prop <- assess(insumos_prop)
+evaluacion_tot <- assess(insumos_total)
+evaluacion_suma <- assess(insumos_suma)
+evaluacion_media <- assess(insumos_media)
 
 ## -----------------------------------------------------------------------------
 # Desempleo desagregado por region
 desagregar <- create_size(var = "desocupado", domains = "region", subpop = "fdt", design =  dc_ene)
 # Evaluar tabulado
-evaluacion_tot_desagreg <- evaluate(desagregar, publicar = T)
+evaluacion_tot_desagreg <- assess(desagregar, publicar = T)
 
 ## -----------------------------------------------------------------------------
 # Reset original options
