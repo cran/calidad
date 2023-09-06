@@ -366,8 +366,7 @@ create_size <- function(var, domains = NULL, subpop = NULL, design, ci = FALSE, 
 
 
   # Combine all the information in one single table
-  final <- create_output(tabla, agrupacion,  gl = gl, n, cv)
-
+  final <- create_output(tabla, agrupacion,  gl = gl, n, cv,)
 
   # Order columns and standardize variable names
   final <- standardize_columns(final, var, denom = NULL)
@@ -442,7 +441,7 @@ create_size <- function(var, domains = NULL, subpop = NULL, design, ci = FALSE, 
 #'
 #' dc <- svydesign(ids = ~Conglomerado, strata = ~VarStrat, data = enusc, weights = ~Fact_Pers)
 #' options(survey.lonely.psu = "certainty")
-#' create_prop(var = "VP_DC", denominator = "hom_insg_taxi", design = dc)
+#' create_prop(var = "muj_insg_taxi", denominator = "hom_insg_taxi", design = dc)
 #' options(old_options)
 #' @export
 #'

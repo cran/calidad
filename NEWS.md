@@ -1,7 +1,7 @@
 
-# calidad 0.3.0
+# calidad 0.5.0
 
+- Fixing internal bugs in create_prop
 
-- spelling corrections
 
  
