@@ -59,19 +59,27 @@ insumos_total_nacional <-  create_total("desocupado", subpop = "fdt", design = d
 insumos_suma_nacional <- create_total("gastot_hd", design = dc_epf)
 insumos_media_nacional <-  create_mean("gastot_hd", design = dc_epf)
 
-## ---- eval=T, warning=FALSE---------------------------------------------------
-evaluacion_prop <- assess(insumos_prop)
-evaluacion_tot <- assess(insumos_total)
-evaluacion_suma <- assess(insumos_suma)
-evaluacion_media <- assess(insumos_media)
+## ---- eval=F, warning=FALSE---------------------------------------------------
+#  
+#  # INE Chile
+#  evaluacion_prop <- assess(insumos_prop)
+#  evaluacion_tot <- assess(insumos_total)
+#  evaluacion_suma <- assess(insumos_suma)
+#  evaluacion_media <- assess(insumos_media)
+#  
+#  # ECLAC
+#  evaluacion_cepal_2020 <- assess(eclac_inputs, scheme = 'eclac_2020')
+#  evaluacion_cepal_2023 <- assess(eclac_inputs, scheme = 'eclac_2023')
 
-## -----------------------------------------------------------------------------
-# Desempleo desagregado por region
-desagregar <- create_size(var = "desocupado", domains = "region", subpop = "fdt", design =  dc_ene)
-# Evaluar tabulado
-evaluacion_tot_desagreg <- assess(desagregar, publicar = T)
+## ----eval=F-------------------------------------------------------------------
+#  # Unemployment by region
+#  desagregar <- create_size(var = "desocupado", domains = "region", subpop = "fdt", design =  dc_ene)
+#  
+#  # assess output
+#  evaluacion_tot_desagreg <- assess(desagregar, publish = T)
+#  evaluacion_tot_desagreg
 
-## -----------------------------------------------------------------------------
-# Reset original options
-options(old_options)
+## ----eval=F-------------------------------------------------------------------
+#  # Reset original options
+#  options(old_options)
 

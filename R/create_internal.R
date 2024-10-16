@@ -21,8 +21,19 @@ get_design_vars <- function(design) {
   return(vars)
 }
 
-
-# Turn on all the indicators needed for the eclac standard
+#' Turn on all the indicators needed for the eclac standard
+#'
+#' This function activates the appropriate indicators based on the
+#' selected eclac standard and whether proportion indicators are needed.
+#'
+#' @param eclac A logical value indicating the eclac standard.
+#' @param env The environment from which to retrieve the existing indicator values.
+#'   Defaults to the parent frame.
+#' @param proportion A logical value indicating whether proportion indicators
+#'   should be turned on. Defaults to FALSE.
+#'
+#' @return A list of logical values indicating which indicators are turned on.
+#'
 eclac_standard <- function(eclac,  env = parent.frame(), proportion = FALSE  ) {
 
   if (eclac == TRUE & proportion == FALSE) {
@@ -52,6 +63,7 @@ eclac_standard <- function(eclac,  env = parent.frame(), proportion = FALSE  ) {
 
   return(eclac_indicators)
 }
+
 
 #--------------------------------
 
@@ -90,7 +102,7 @@ fix_repeated_columns <- function(table, v) {
 add_class <-  function(object, new_class) {
   class(object)  <- append(class(object), new_class, after = FALSE)
   return(object)
-  }
+}
 
 
 
@@ -124,13 +136,13 @@ get_unweighted <- function(table, disenio, var, domains) {
 
   if (!is.null(domains)) {
     unweighted_cases <- get_sample_size(disenio$variables, c(domains, var) ) %>%
-      dplyr::mutate_at(dplyr::vars(all_of(domains)), as.character)  %>%
+      dplyr::mutate_at(dplyr::vars(dplyr::all_of(domains)), as.character)  %>%
       dplyr::filter(!!rlang::parse_expr(var) == 1 ) %>%
       dplyr::rename(unweighted = "n")
 
 
     unweighted_cases <- table %>%
-      dplyr::left_join(unweighted_cases %>% dplyr::select(c(all_of(domains), "unweighted" )),
+      dplyr::left_join(unweighted_cases %>% dplyr::select(c(dplyr::all_of(domains), "unweighted" )),
                        by = domains)
 
   } else {
@@ -247,7 +259,7 @@ standardize_columns <- function(data, var, denom) {
 
   if (!is.null(data$deff) ) {
     data <- data %>%
-      dplyr::relocate(deff, .after = last_col())
+    dplyr::relocate(deff, .after = dplyr::last_col())
 
   }
 
@@ -271,18 +283,18 @@ create_output <- function(table, domains, gl, n, cv, env = parent.frame()) {
 
   domains_original <- get("domains",envir = env)
 
- # return(domains_original)
+  # return(domains_original)
 
   # tabla con desagregación
   if (nrow(data.frame(table)) > 1 | !is.null(domains_original)) {
 
     final <- table %>%
-      dplyr::mutate_at(.vars = dplyr::vars(all_of(domains) ), .funs = as.character) %>%
-      dplyr::left_join(gl %>% dplyr::select(c(all_of(domains), "df")),
+      dplyr::mutate_at(.vars = dplyr::vars(dplyr::all_of(domains) ), .funs = as.character) %>%
+      dplyr::left_join(gl %>% dplyr::select(c(dplyr::all_of(domains), "df")),
                        by = domains) %>%
-      dplyr::left_join(n %>% dplyr::select(c(all_of(domains), "n")),
+      dplyr::left_join(n %>% dplyr::select(c(dplyr::all_of(domains), "n")),
                        by = domains) %>%
-      dplyr::left_join(cv %>% dplyr::select(c(all_of(domains), "cv")),
+      dplyr::left_join(cv %>% dplyr::select(c(dplyr::all_of(domains), "cv")),
                        by = domains)
   } else {
 
@@ -295,7 +307,7 @@ create_output <- function(table, domains, gl, n, cv, env = parent.frame()) {
 
     final <- dplyr::bind_cols(final, "df" = gl , "n" = n, "cv" = cv[1])
 
-## en ocaciones survey te entrega el error estandar con el nombre de la variable objetivo.
+    ## en ocaciones survey te entrega el error estandar con el nombre de la variable objetivo.
     if(names(final)[2] == var){
       names(final)[2] <- "se"
     }
@@ -321,18 +333,18 @@ create_output <- function(table, domains, gl, n, cv, env = parent.frame()) {
 
 get_cv <- function(table, design, domains, type_est = "all", env = parent.frame()) {
 
-  # weird case: national estimations for ine df-approach. In this case there is one element inside domains, but that is
+  # weird case: national estimations for chile df-approach. In this case there is one element inside domains, but that is
   # because the strategy used before this function
-  if (length(domains) == 1 && type_est == "size" && get("df_type", env) == "ine") {
+  if (length(domains) == 1 && type_est == "size" && get("df_type", env) == "chile") {
     cv <- cv(table, design = design)
 
   } else if (!is.null(domains)) { # it considers domains
     cv <- cv(table, design = design)
 
     cv <- table %>%
-      dplyr::select(all_of(domains)) %>%
+      dplyr::select(dplyr::all_of(domains)) %>%
       dplyr::bind_cols(cv = cv) %>%
-      dplyr::mutate_at(.vars = dplyr::vars(all_of(domains) ), .funs = as.character)
+      dplyr::mutate_at(.vars = dplyr::vars(dplyr::all_of(domains) ), .funs = as.character)
 
   } else { # national level for all kind of estimations
     cv <- cv(table, design = design)
@@ -351,15 +363,16 @@ get_cv <- function(table, design, domains, type_est = "all", env = parent.frame(
 #' Receive data and domains. Returns a data frame with the psu, strata and df for each cell
 #' @param data \code{dataframe}
 #' @param domains \code{string} with domains
-#' @param df_type \code{string} Use degrees of freedom calculation approach from INE Chile or eclac, by default "ine".
+#' @param df_type \code{string} Use degrees of freedom calculation approach from INE Chile or eclac, by default "chile".
 #' @return \code{dataframe} with results including degrees of freedom
+
 
 
 get_df <- function(data, domains, df_type = "eclac"){
   design <- data
   data <- data$variables
 
-### Si no hay diseño, no se calcula nada
+  ### Si no hay diseño, no se calcula nada
   if (as.character(design$call$ids)[[2]] == "1") {
     gl <- data %>%
       dplyr::group_by_at(.vars  = domains) %>%
@@ -367,7 +380,7 @@ get_df <- function(data, domains, df_type = "eclac"){
                        vartstrat = NA,
                        df = NA
       ) %>%
-      dplyr::mutate_at(.vars = dplyr::vars(all_of(domains) ), .funs = as.character)
+      dplyr::mutate_at(.vars = dplyr::vars(dplyr::all_of(domains) ), .funs = as.character)
 
     return(gl)
   }
@@ -375,15 +388,15 @@ get_df <- function(data, domains, df_type = "eclac"){
 
   if (!is.null(domains)) {
 
-    if(df_type == "ine"){
-      #  Get estimation variable for the case size-INE. We need this variable to filter the table in order to exclude zero values
+    if(df_type == "chile"){
+      #  Get estimation variable for the case size-chile. We need this variable to filter the table in order to exclude zero values
       estimation_var <- domains[length(domains)]
 
       gl <- calcular_upm(design$variables, domains)  %>%
         dplyr::left_join(calcular_estrato(design$variables, domains), by = domains)  %>%
         dplyr::mutate(df = .data$upm - .data$varstrat)   %>%
         dplyr::filter(!!rlang::parse_expr(estimation_var) == 1)   %>% # the zero cases are deleted
-        dplyr::mutate_at(.vars = dplyr::vars(all_of(domains) ), .funs = as.character) %>%
+        dplyr::mutate_at(.vars = dplyr::vars(dplyr::all_of(domains) ), .funs = as.character) %>%
         dplyr::ungroup()   %>%
         dplyr::select(-c("upm","varstrat"))
 
@@ -391,38 +404,38 @@ get_df <- function(data, domains, df_type = "eclac"){
       gl <- calcular_upm(design$variables, domains) %>%
         dplyr::left_join(calcular_estrato(design$variables, domains), by = domains) %>%
         dplyr::mutate(df = .data$upm - .data$varstrat)  %>%
-        dplyr::mutate_at(.vars = dplyr::vars(all_of(domains) ), .funs = as.character)  %>%
+        dplyr::mutate_at(.vars = dplyr::vars(dplyr::all_of(domains) ), .funs = as.character)  %>%
         dplyr::ungroup() %>%
         dplyr::select(-c("upm","varstrat"))
     }
 
-### sin desagregación
+    ### sin desagregación
   } else {
 
-    if(df_type == "ine"){
+    if(df_type == "chile"){
 
       estimation_var <- domains[length(domains)]
 
-    gl <- data %>%
-      dplyr::filter(!!rlang::parse_expr(estimation_var) == 1) %>%
-      dplyr::summarise(upm = length(unique(.data$varunit)),
-                varstrat = length(unique(.data$varstrat)),
-                df = .data$upm - .data$varstrat) %>%
-      dplyr::select(-c(estimation_var,"upm","varstrat"))
+      gl <- data %>%
+        dplyr::filter(!!rlang::parse_expr(estimation_var) == 1) %>%
+        dplyr::summarise(upm = length(unique(.data$varunit)),
+                         varstrat = length(unique(.data$varstrat)),
+                         df = .data$upm - .data$varstrat) %>%
+        dplyr::select(-c(estimation_var,"upm","varstrat"))
 
-  #  print(paste("fe",gl))
+      #  print(paste("fe",gl))
 
     } else if(df_type == "eclac"){
-       # varstrat <- length(unique(design$variables$varstrat))
-       # varunit <- length(unique(design$variables$varunit))
-       # gl <- varunit - varstrat
+      # varstrat <- length(unique(design$variables$varstrat))
+      # varunit <- length(unique(design$variables$varunit))
+      # gl <- varunit - varstrat
 
-     gl <- calcular_estrato(design$variables,domains = NULL) %>%
-               dplyr::bind_cols(calcular_upm(design$variables,domains = NULL)) %>%
-               dplyr::mutate(df = .data$upm - .data$varstrat) %>%
-               dplyr::select(-c("upm","varstrat"))
+      gl <- calcular_estrato(design$variables,domains = NULL) %>%
+        dplyr::bind_cols(calcular_upm(design$variables,domains = NULL)) %>%
+        dplyr::mutate(df = .data$upm - .data$varstrat) %>%
+        dplyr::select(-c("upm","varstrat"))
 
-     return(gl)
+      return(gl)
     }
 
   }
@@ -430,7 +443,6 @@ get_df <- function(data, domains, df_type = "eclac"){
   return(gl)
 
 }
-
 #-----------------------------------------------------------------------
 
 
@@ -468,7 +480,7 @@ convert_to_formula <- function(var) {
       stats::as.formula()
 
   } else {
-   var_form <- NULL
+    var_form <- NULL
   }
   return(var_form)
 
@@ -511,7 +523,7 @@ check_input_var <- function(var, disenio, estimation = "mean") {
 
     if (sum(es_prop$es_prop) == nrow(disenio$variables)) warning("It seems yor are using a proportion variable!")
 
-  # En el caso de proporción, se exige que la variable sea dummy
+    # En el caso de proporción, se exige que la variable sea dummy
   } else if (estimation == "prop" | estimation == "size" ) {
     es_prop <- disenio$variables %>%
       dplyr::mutate(es_prop = dplyr::if_else(!!rlang::parse_expr(var) == 1 | !!rlang::parse_expr(var) == 0 | is.na(!!rlang::parse_expr(var)),
@@ -587,11 +599,10 @@ get_survey_table <-  function(var, domains, complex_design, estimation = "mean",
                                    FUN = fun,
                                    deff = get("deff", env))
 
-
-      # This is a patch because a problem with df_type = INE. We needed to add the var to domains in order to get the DF and sample size according to
-      # INE approach. This decision  produces an error in the deff calculation. So we implement here a specific procedure for the size function. The idea is
+      # This is a patch because a problem with df_type = chile. We needed to add the var to domains in order to get the DF and sample size according to
+      # chile approach. This decision  produces an error in the deff calculation. So we implement here a specific procedure for the size function. The idea is
       # to avoid any modification in the rest of the code.
-      if (type_est == "size" &&  get("df_type", env) == "ine" ) {
+      if (type_est == "size" &&  get("df_type", env) == "chile" ) {
 
         names(estimacion)[names(estimacion) == formula_to_string(var) ] <- "est"
         estimacion[formula_to_string(var)] <- 1
@@ -605,9 +616,8 @@ get_survey_table <-  function(var, domains, complex_design, estimation = "mean",
       # drop rows with zero values
       string_var <- formula_to_string(var)
 
-      estimacion <- estimacion %>%
-        dplyr::filter(!!rlang::parse_expr(string_var)  != 0)
-
+      #estimacion <- estimacion %>%
+      #  dplyr::filter(!!rlang::parse_expr(string_var)  != 0)
 
     } else if (estimation == "ratio")  {
 
@@ -634,11 +644,11 @@ get_survey_table <-  function(var, domains, complex_design, estimation = "mean",
   } else {
     if (estimation == "mean") { # para calcular la media
 
-        estimacion <- fun(var, complex_design, deff = get("deff", env))
+      estimacion <- fun(var, complex_design, deff = get("deff", env))
 
     } else if (estimation == "ratio") {
 
-        estimacion <- survey::svyratio(var, denominator = denom, design = complex_design, deff = get("deff", env))
+      estimacion <- survey::svyratio(var, denominator = denom, design = complex_design, deff = get("deff", env))
 
 
     } else { # para calcular la mediana
@@ -672,12 +682,11 @@ calcular_tabla_ratio <-  function(var,denominator, domains = NULL, complex_desig
 #-----------------------------------------------------------------------
 
 
-
 get_sample_size <- function(data, domains = NULL, df_type = "eclac", env = parent.frame()) {
 
-  if(df_type == "ine"){
+  if(df_type == "chile"){
 
-    #  Get estimation variable for the case size-INE. We need this variable to filter the table in order to exclude zero values
+    #  Get estimation variable for the case size-chile. We need this variable to filter the table in order to exclude zero values
     estimation_var <- domains[length(domains)]
 
     data %>%
@@ -696,6 +705,7 @@ get_sample_size <- function(data, domains = NULL, df_type = "eclac", env = paren
   }
 
 }
+
 
 # -----------------------------------------------------------------------
 
@@ -729,24 +739,24 @@ chequear_var_disenio <- function(data) {
 
 
 calcular_upm <- function(data, domains, var = NULL ) {
-    listado <- c("varunit", domains)
-    if (is.null(var)) {
-      data %>%
-        dplyr::group_by_at(.vars = listado) %>%
-        dplyr::summarise(conteo = dplyr::n()) %>%
-        dplyr::mutate(tiene_info = dplyr::if_else(.data$conteo > 0, 1, 0))  %>%
-        dplyr::group_by_at(.vars = domains) %>%
-        dplyr::summarise(upm = sum(.data$tiene_info))
-    } else {
-      symbol_var <- rlang::parse_expr(var)
-      data %>%
-        dplyr::mutate(!!symbol_var := as.numeric(!!symbol_var)) %>%
-        dplyr::group_by_at(.vars = listado) %>%
-        dplyr::summarise(conteo = sum(!!symbol_var)) %>%
-        dplyr::mutate(tiene_info = dplyr::if_else(.data$conteo > 0, 1, 0))  %>%
-        dplyr::group_by_at(.vars = domains) %>%
-        dplyr::summarise(upm = sum(.data$tiene_info))
-    }
+  listado <- c("varunit", domains)
+  if (is.null(var)) {
+    data %>%
+      dplyr::group_by_at(.vars = listado) %>%
+      dplyr::summarise(conteo = dplyr::n()) %>%
+      dplyr::mutate(tiene_info = dplyr::if_else(.data$conteo > 0, 1, 0))  %>%
+      dplyr::group_by_at(.vars = domains) %>%
+      dplyr::summarise(upm = sum(.data$tiene_info))
+  } else {
+    symbol_var <- rlang::parse_expr(var)
+    data %>%
+      dplyr::mutate(!!symbol_var := as.numeric(!!symbol_var)) %>%
+      dplyr::group_by_at(.vars = listado) %>%
+      dplyr::summarise(conteo = sum(!!symbol_var)) %>%
+      dplyr::mutate(tiene_info = dplyr::if_else(.data$conteo > 0, 1, 0))  %>%
+      dplyr::group_by_at(.vars = domains) %>%
+      dplyr::summarise(upm = sum(.data$tiene_info))
+  }
 
 
 }
@@ -1031,10 +1041,8 @@ create_ratio_internal <- function(var,denominator, domains = NULL, subpop = NULL
 #' @param unweighted \code{boolean} Add non weighted count if it is required
 #' @return \code{dataframe} that contains the inputs and all domains to be evaluated
 #'
-
 create_prop_internal <- function(var, domains = NULL, subpop = NULL, disenio, ci = FALSE, deff = FALSE, ess = FALSE, ajuste_ene = FALSE,
                                  rel_error = FALSE, log_cv = FALSE, unweighted = FALSE, standard_eval = TRUE, rm.na = FALSE, env =  parent.frame()) {
-
 
   # get design variables
   design_vars <- get_design_vars(disenio )
@@ -1043,7 +1051,7 @@ create_prop_internal <- function(var, domains = NULL, subpop = NULL, disenio, ci
   agrupacion <- create_groupby_vars(domains)
 
   # Select relevant columns
-  disenio <- disenio[ ,  c(agrupacion,var, subpop, design_vars  ) ]
+  disenio <- disenio[ ,  c(agrupacion, var, subpop, design_vars  ) ]
 
   # Chequear que la variable objetivo y la variable subpop cumplan con ciertas condiciones
   check_input_var(var, disenio, estimation = "prop")
@@ -1052,17 +1060,15 @@ create_prop_internal <- function(var, domains = NULL, subpop = NULL, disenio, ci
   # Lanzar warning del error estándar cuando no se usa el diseño
   se_message(disenio)
 
-  # Homologar nombres de variables  del diseño
+  # Homologar nombres de variables del diseño
   disenio <- standardize_design_variables(disenio)
 
-
-  # Convertir everithing tolower to avoid problems
+  # Convertir todo a minúsculas para evitar problemas
   names(disenio$variables) <- tolower(names(disenio$variables))
-  lower_params <- purrr::map(list("var" = var, "subpop" = subpop, "domains" = domains ),  tolower_strings )
+  lower_params <- purrr::map(list("var" = var, "subpop" = subpop, "domains" = domains), tolower_strings)
   var <- lower_params$var
   subpop <- lower_params$subpop
   domains <- lower_params$domains
-
 
   # Sacar los NA si el usuario lo requiere
   if (rm.na == TRUE) {
@@ -1072,10 +1078,10 @@ create_prop_internal <- function(var, domains = NULL, subpop = NULL, disenio, ci
   # Filtrar diseño, si el usuario agrega el parámetro subpop
   disenio <- filter_design(disenio, subpop)
 
-  #Convertir los inputs en formulas para adecuarlos a survey
+  # Convertir los inputs en fórmulas para adecuarlos a survey
   var_form <- convert_to_formula(var)
 
-  # Convertir en formula para survey
+  # Convertir en fórmula para survey
   domains_form <- convert_to_formula(domains)
 
   tabla <- get_survey_table(var_form, domains_form, disenio, fun = survey::svymean)
@@ -1083,21 +1089,20 @@ create_prop_internal <- function(var, domains = NULL, subpop = NULL, disenio, ci
   # Crear listado de variables que se usan en los dominios
   agrupacion <- create_groupby_vars(domains)
 
-  #Calcular el tamanio muestral de cada grupo
+  # Calcular el tamaño muestral de cada grupo
   n <- get_sample_size(disenio$variables, agrupacion)
 
-  #Calcular los grados de libertad de todos los cruces
+  # Calcular los grados de libertad de todos los cruces
   gl <- get_df(disenio, agrupacion)
 
-  #Extrear el coeficiente de variacion
+  # Extraer el coeficiente de variación
   cv <- get_cv(tabla, disenio, agrupacion)
 
-  #Unir toda la informacion en una tabla final
-  final <- create_output(tabla, agrupacion,  gl, n, cv)
+  # Unir toda la información en una tabla final
+  final <- create_output(tabla, agrupacion, gl, n, cv)
 
   # Ordenar las columnas y estandarizar los nombres de las variables
-  final <- standardize_columns(final, var, denom = get("denominator", env) )
-
+  final <- standardize_columns(final, var, denom = get("denominator", env))
 
   # Add unweighted counting
   if (unweighted) {
@@ -1106,32 +1111,24 @@ create_prop_internal <- function(var, domains = NULL, subpop = NULL, disenio, ci
 
   # Add confidence intervals
   if (ci == TRUE) {
-    final <- get_ci(final,  ajuste_ene = ajuste_ene)
+    final <- get_ci(final, ajuste_ene = ajuste_ene)
   }
 
-
-  # add relative error, if the user uses this parameter
+  # Add relative error, if the user uses this parameter
   if (rel_error == TRUE) {
     final <- final %>%
       dplyr::mutate(relative_error = stats::qt(c(.975), df = .data$df) * cv)
   }
 
-
-  # add log cv, if the user uses this parameter
-  if (log_cv) {
+  # Add log cv, if the user uses this parameter
+  if (!is.null(log_cv) && log_cv) {
     final <- final %>%
-      dplyr::mutate(log_cv = .data$se / (-log(.data$stat)*.data$stat))
+      dplyr::mutate(log_cv = .data$se / (-log(.data$stat) * .data$stat))
   }
 
-  # add the ess if the user uses this parameter
+  # Add the ess if the user uses this parameter
   final <- get_ess(ess)
 
   return(final)
-
-
-
-
 }
-
-
 
