@@ -27,8 +27,10 @@ old_options <-  options()
 ## -----------------------------------------------------------------------------
 # Complex sample design for ENE
 dc_ene <- svydesign(ids = ~conglomerado , strata = ~estrato_unico, data = ene, weights = ~fact_cal)
+
 # Complex sample design for EPF
 dc_epf <- svydesign(ids = ~varunit, strata = ~varstrat, data = epf, weights = ~fe)
+
 options(survey.lonely.psu = "certainty")
 
 ## -----------------------------------------------------------------------------
@@ -58,6 +60,12 @@ insumos_total_nacional <-  create_total("desocupado", subpop = "fdt", design = d
 # EPF dataset
 insumos_suma_nacional <- create_total("gastot_hd", design = dc_epf)
 insumos_media_nacional <-  create_mean("gastot_hd", design = dc_epf)
+
+## -----------------------------------------------------------------------------
+# ENE dataset
+prop_nacional_ci <- create_prop("desocupado", subpop = "fdt", design = dc_ene, ci = TRUE)                        
+prop_nacional_ci_logit <- create_prop("desocupado", subpop = "fdt", design = dc_ene, ci_logit = TRUE) 
+
 
 ## ---- eval=F, warning=FALSE---------------------------------------------------
 #  

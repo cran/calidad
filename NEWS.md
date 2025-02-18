@@ -1,6 +1,7 @@
 
-# calidad 0.5.0
+# calidad 0.7.0
 
-- New quality standard (CEPAL, 2024) 
+- Logistic coefficient of variation for proportions  
+
 
  
