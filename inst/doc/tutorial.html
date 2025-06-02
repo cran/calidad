@@ -382,7 +382,7 @@ unemployed).</p>
 <span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="fu">group_by</span>(folio) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 </div>
 <div id="sample-design" class="section level2">
 <h2>Sample design</h2>
@@ -396,7 +396,7 @@ design for the two surveys (EPF and ENE). Additionally, it may be useful
 to declare an option for strata that only have one PSU.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Store original options</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>old_options <span class="ot">&lt;-</span>  <span class="fu">options</span>()</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Complex sample design for ENE</span></span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>dc_ene <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span>conglomerado , <span class="at">strata =</span> <span class="sc">~</span>estrato_unico, <span class="at">data =</span> ene, <span class="at">weights =</span> <span class="sc">~</span>fact_cal)</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
@@ -404,14 +404,14 @@ to declare an option for strata that only have one PSU.</p>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>dc_epf <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span>varunit, <span class="at">strata =</span> <span class="sc">~</span>varstrat, <span class="at">data =</span> epf, <span class="at">weights =</span> <span class="sc">~</span>fe)</span>
 <span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="fu">options</span>(<span class="at">survey.lonely.psu =</span> <span class="st">&quot;certainty&quot;</span>)</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 <p>For ELE survey, we also must to declare the fpc (finite population
 correction)</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Complex sample design for ELE</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>dc_ele <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span>rol_ficticio, <span class="at">weights =</span> <span class="sc">~</span>fe_transversal, <span class="at">strata =</span> <span class="sc">~</span>estrato, <span class="at">fpc =</span> <span class="sc">~</span>pob, <span class="at">data =</span> ELE7)</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">options</span>(<span class="at">survey.lonely.psu =</span> <span class="st">&#39;remove&#39;</span>)</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 </div>
 <div id="inputs-creation" class="section level2">
 <h2>Inputs creation</h2>
@@ -430,7 +430,7 @@ following example shows how the proportion and size functions are
 used.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>insumos_prop <span class="ot">&lt;-</span> <span class="fu">create_prop</span>(<span class="at">var =</span> <span class="st">&quot;desocupado&quot;</span>, <span class="at">domains =</span> <span class="st">&quot;sexo&quot;</span>, <span class="at">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="at">design =</span>  dc_ene) <span class="co"># proportion of unemployed people</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>insumos_total <span class="ot">&lt;-</span>  <span class="fu">create_size</span>(<span class="at">var =</span> <span class="st">&quot;desocupado&quot;</span>, <span class="at">domains =</span> <span class="st">&quot;sexo&quot;</span>, <span class="at">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="at">design =</span>  dc_ene) <span class="co"># number of unemployed people</span></span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 <ul>
 <li><code>var</code>: variable to be estimated. Must be a dummy
 variable</li>
@@ -445,16 +445,16 @@ standard</p>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt;   sexo     stat       se  df    n         cv</span></span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; 1    1 399299.4 14530.92 880 1564 0.03639102</span></span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; 2    2 402505.4 14688.19 913 1629 0.03649190</span></span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 <p>To get more domains, we can use the “+” symbol as follows:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>desagregar <span class="ot">&lt;-</span> <span class="fu">create_prop</span>(<span class="at">var =</span> <span class="st">&quot;desocupado&quot;</span>, <span class="at">domains =</span> <span class="st">&quot;sexo+region&quot;</span>, <span class="at">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="at">design =</span>  dc_ene)</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 <p>A useful parameter is <code>eclac_input</code>. It allows to return
 the ECLAC inputs. By default this parameter is <code>FALSE</code> and
 with the option <code>TRUE</code> we can activate it.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a></span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>eclac_inputs <span class="ot">&lt;-</span>  <span class="fu">create_prop</span>(<span class="at">var =</span> <span class="st">&quot;desocupado&quot;</span>, <span class="at">domains =</span> <span class="st">&quot;sexo+region&quot;</span>, <span class="at">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="at">design =</span>  dc_ene, <span class="at">eclac_input =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 <p>In some cases, it may be of interest to assess the estimate of a
 ratio. The <code>create_prop</code> function allows ratio estimation by
 explicitly specifying the numerator and the denominator. To do this, the
@@ -469,7 +469,7 @@ is shown below:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a></span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">create_prop</span>(<span class="at">var =</span> <span class="st">&quot;mujer&quot;</span>, <span class="at">denominator =</span> <span class="st">&quot;hombre&quot;</span>, <span class="at">domains =</span> <span class="st">&quot;ocupado&quot;</span>, <span class="at">design =</span> dc_ene,</span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>            <span class="at">eclac_input =</span> <span class="cn">TRUE</span>, <span class="at">scheme =</span> <span class="st">&#39;eclac_2023&#39;</span>)</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 </div>
 <div id="household-budget-survey-part-2" class="section level3">
 <h3>Household Budget Survey (part 2)</h3>
@@ -481,12 +481,12 @@ continuous variable such as hours, expense, or income and generates
 totals at the requested level. The ending “with” of the function alludes
 to the fact that a continuous variable is being used.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>insumos_suma <span class="ot">&lt;-</span>  <span class="fu">create_total</span>(<span class="at">var =</span> <span class="st">&quot;gastot_hd&quot;</span>, <span class="at">domains =</span> <span class="st">&quot;zona&quot;</span>, <span class="at">design =</span>  dc_epf)</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 <p>If we want to assess the estimate of a mean, we have the function
 <code>create_mean</code>. In this case, we will calculate the average
 expenditure of households, according to geographical area.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>insumos_media <span class="ot">&lt;-</span>  <span class="fu">create_mean</span>(<span class="at">var =</span> <span class="st">&quot;gastot_hd&quot;</span>, <span class="at">domains =</span> <span class="st">&quot;zona&quot;</span>, <span class="at">design =</span>  dc_epf)</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 <p>The default usage is not to disaggregate, in which case the functions
 should be used as follows:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># ENE dataset</span></span>
@@ -496,7 +496,7 @@ should be used as follows:</p>
 <span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co"># EPF dataset</span></span>
 <span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>insumos_suma_nacional <span class="ot">&lt;-</span> <span class="fu">create_total</span>(<span class="st">&quot;gastot_hd&quot;</span>, <span class="at">design =</span> dc_epf)</span>
 <span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>insumos_media_nacional <span class="ot">&lt;-</span>  <span class="fu">create_mean</span>(<span class="st">&quot;gastot_hd&quot;</span>, <span class="at">design =</span> dc_epf)</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 <p>The create functions also include a <code>ci</code> parameter, which
 allows returning the confidence interval. By default, this parameter is
 set to <code>FALSE.</code> For proportions, the logistic confidence
@@ -505,7 +505,7 @@ interval is available. To use it, you need to set
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># ENE dataset</span></span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>prop_nacional_ci <span class="ot">&lt;-</span> <span class="fu">create_prop</span>(<span class="st">&quot;desocupado&quot;</span>, <span class="at">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="at">design =</span> dc_ene, <span class="at">ci =</span> <span class="cn">TRUE</span>)                        </span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>prop_nacional_ci_logit <span class="ot">&lt;-</span> <span class="fu">create_prop</span>(<span class="st">&quot;desocupado&quot;</span>, <span class="at">subpop =</span> <span class="st">&quot;fdt&quot;</span>, <span class="at">design =</span> dc_ene, <span class="at">ci_logit =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 </div>
 <div id="longitudinal-enterprise-survey-part-3" class="section level3">
 <h3>Longitudinal Enterprise Survey (part 3)</h3>
@@ -515,7 +515,7 @@ wage productivity is estimated as the ratio between value added and the
 total gross remuneration of personnel hired by the company.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>prod_salarial <span class="ot">&lt;-</span> <span class="fu">create_prop</span>(<span class="st">&#39;VA_2022f&#39;</span>, <span class="at">denominator =</span> <span class="st">&#39;REMP_TOTAL&#39;</span>, <span class="at">domains =</span> <span class="st">&#39;cod_actividad+cod_tamano&#39;</span>, <span class="at">design =</span> dc_ele)</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 </div>
 </div>
 <div id="assessment" class="section level2">
@@ -542,7 +542,7 @@ set to <code>FALSE</code> by default.</p>
 <span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co"># ECLAC </span></span>
 <span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>evaluacion_cepal_2020 <span class="ot">&lt;-</span> <span class="fu">assess</span>(eclac_inputs, <span class="at">scheme =</span> <span class="st">&#39;eclac_2020&#39;</span>)</span>
 <span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>evaluacion_cepal_2023 <span class="ot">&lt;-</span> <span class="fu">assess</span>(eclac_inputs, <span class="at">scheme =</span> <span class="st">&#39;eclac_2023&#39;</span>, <span class="at">domain_info =</span> <span class="cn">TRUE</span>, <span class="at">low_df_justified =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 <p>In the INE Chile Economics standard (<code>chile_economics</code>),
 the <code>domain_info</code> parameter is also available, and the
 <code>table_n_obj</code> parameter can be used to specify the target
@@ -567,7 +567,7 @@ coefficient of variation (CV) will be used instead.</p>
 <span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a></span>
 <span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>eval_ratio <span class="ot">&lt;-</span> <span class="fu">assess</span>(prod_salarial, <span class="at">scheme =</span> <span class="st">&#39;chile_economics&#39;</span>,</span>
 <span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>                     <span class="at">domain_info =</span> <span class="cn">TRUE</span>, <span class="at">table_n_obj =</span> table_n_obj, <span class="at">ratio_between_0_1 =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 <p>The output is a <code>dataframe</code> that, in addition to
 containing the information already generated, includes a column that
 indicates whether the estimate is unreliable, less reliable or
@@ -582,10 +582,10 @@ reliable, it should not be published.</p>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co"># assess output</span></span>
 <span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>evaluacion_tot_desagreg <span class="ot">&lt;-</span> <span class="fu">assess</span>(desagregar, <span class="at">publish =</span> T)</span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>evaluacion_tot_desagreg</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># Reset original options</span></span>
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="fu">options</span>(old_options)</span></code></pre></div>
-<p>C:4qfZS5cc861292365.R</p>
+<p>C:3C7fh6a746e3532ce.R</p>
 </div>
 </div>
 <div class="footnotes footnotes-end-of-document">

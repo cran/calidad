@@ -1,11 +1,11 @@
-78586360e76316d65c3962f1d2f1d604 *DESCRIPTION
+36b9e2b3507e1449f42fa8c0c633a59b *DESCRIPTION
 4e9a21a0a4fa7e99c409b8dbc2f69f47 *NAMESPACE
-90a6d920004d750818126db8553d4bca *NEWS.md
+af56cb1df602e2ec0f3509ab44bae4a8 *NEWS.md
 444c2949c803e31cfc004008b07c7d7a *R/create_external.R
-f7ff4fd347ce4fe031d995789a618dca *R/create_internal.R
+e9e8a3177a3618567b4f0631e631a8d5 *R/create_internal.R
 10210881095d724208f02584287a964a *R/data.R
 6b6b5a3e79b135b65501cb675c9e448d *R/evaluate_external.R
-30f2a00b9acaa68d16e3a292b96cd861 *R/evaluate_internal.R
+31f801aad4db535e747839dc6a69218d *R/evaluate_internal.R
 26de4acea4a4b95c1d290d58f1aa4fa1 *R/report.R
 0075fe5e1f95c2359e2f2d6f7152df2b *build/vignette.rds
 bd9d53e5c8de3c271370c5145bb73aac *data/ELE7.rda
@@ -17,7 +17,7 @@ e808ef4d24348cda33c583c164e82c3a *data/enusc.rda
 5ef856ed989a9f89b47898a848560439 *data/epf_personas.rda
 b44d512d555aea34cd323070db790f7d *inst/doc/tutorial.R
 1dad4e02a0a150b40966b151e71989f2 *inst/doc/tutorial.Rmd
-93e1c715c0a002ff37beb52be2e788ec *inst/doc/tutorial.html
+ec8fc26f0b7be927651a65174fcbfa90 *inst/doc/tutorial.html
 5780c13c371f572247262711ffdb2b17 *man/ELE7.Rd
 6c78ee7a85d5cc5781684e2f1000f4c8 *man/ELE7_n_obj.Rd
 800b49790288fd9cc92b0a2510c02bbf *man/assess.Rd
@@ -47,7 +47,7 @@ ca1d282543a18fe545748b7b5718462c *tests/testthat/test-create_mean.R
 25f54e9890aa28f620ae9d6ef5c587bf *tests/testthat/test-create_prop.R
 151556424bc84235e6fe8ea23bbc3bf9 *tests/testthat/test-create_size.R
 05499ad9e51809bcf701428a4c8370a7 *tests/testthat/test-create_total.R
-09af6767892b61c434946b941d3d4c86 *tests/testthat/test-evaluate_external.R
+e86bb2f68e7b53d4891afc3ee9e19b6e *tests/testthat/test-evaluate_external.R
 fae9c6daa142ecd5f2dad8ed045ccbd4 *tests/testthat/test-evaluate_internal.R
-2c8a7d915ef886ca5a05f9ffe3b0ce45 *tests/testthat/test-internal_functions.R
+5c9e27d513241aa6d5620155f22c5252 *tests/testthat/test-internal_functions.R
 1dad4e02a0a150b40966b151e71989f2 *vignettes/tutorial.Rmd
