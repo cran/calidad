@@ -1,8 +1,8 @@
-36b9e2b3507e1449f42fa8c0c633a59b *DESCRIPTION
+74c10e4abfb5a5d58f25f96e411580e9 *DESCRIPTION
 4e9a21a0a4fa7e99c409b8dbc2f69f47 *NAMESPACE
-af56cb1df602e2ec0f3509ab44bae4a8 *NEWS.md
+27ea7d4a5823d5614caf09f2c0f555b8 *NEWS.md
 444c2949c803e31cfc004008b07c7d7a *R/create_external.R
-e9e8a3177a3618567b4f0631e631a8d5 *R/create_internal.R
+ee9b7005f072381d483507e31ec45f10 *R/create_internal.R
 10210881095d724208f02584287a964a *R/data.R
 6b6b5a3e79b135b65501cb675c9e448d *R/evaluate_external.R
 31f801aad4db535e747839dc6a69218d *R/evaluate_internal.R
@@ -17,7 +17,7 @@ e808ef4d24348cda33c583c164e82c3a *data/enusc.rda
 5ef856ed989a9f89b47898a848560439 *data/epf_personas.rda
 b44d512d555aea34cd323070db790f7d *inst/doc/tutorial.R
 1dad4e02a0a150b40966b151e71989f2 *inst/doc/tutorial.Rmd
-ec8fc26f0b7be927651a65174fcbfa90 *inst/doc/tutorial.html
+83712fc0a7aa18f340a36a09b46aaea8 *inst/doc/tutorial.html
 5780c13c371f572247262711ffdb2b17 *man/ELE7.Rd
 6c78ee7a85d5cc5781684e2f1000f4c8 *man/ELE7_n_obj.Rd
 800b49790288fd9cc92b0a2510c02bbf *man/assess.Rd
@@ -36,7 +36,7 @@ e7762105b3e098ff9b316e93558ec092 *man/create_prop.Rd
 954c3c4831275bbeee49c99043adfb1d *man/epf_personas.Rd
 b8e8b6c213d4ed5fac2aef60ab98fb9d *man/figures/logo_calidad.png
 9f5e8bd2d0158db0a41344e605ff2e3c *man/get_cv.Rd
-1bab4451e94f2541a41b4500046d9c21 *man/get_df.Rd
+6dd1a1474df25cb7d4d5f9516ddebaa4 *man/get_df.Rd
 d96584e17dd53a82b2df025fdaa1e5d1 *man/get_survey_table.Rd
 1ad716bffe12da449b361c7d24c3a447 *man/quadratic.Rd
 65ed861227bccbd5407e0eb100cf9d9e *man/standardize_columns.Rd
@@ -44,10 +44,10 @@ d96584e17dd53a82b2df025fdaa1e5d1 *man/get_survey_table.Rd
 18ae9628ebdae72c78b6851a5a6cb39b *tests/testthat.R
 d116e384c08726e365a6acf13d58c623 *tests/testthat/Rplots.pdf
 ca1d282543a18fe545748b7b5718462c *tests/testthat/test-create_mean.R
-25f54e9890aa28f620ae9d6ef5c587bf *tests/testthat/test-create_prop.R
+6b91079b0bd4f7cdbdb4b4042f5bb7eb *tests/testthat/test-create_prop.R
 151556424bc84235e6fe8ea23bbc3bf9 *tests/testthat/test-create_size.R
 05499ad9e51809bcf701428a4c8370a7 *tests/testthat/test-create_total.R
 e86bb2f68e7b53d4891afc3ee9e19b6e *tests/testthat/test-evaluate_external.R
-fae9c6daa142ecd5f2dad8ed045ccbd4 *tests/testthat/test-evaluate_internal.R
-5c9e27d513241aa6d5620155f22c5252 *tests/testthat/test-internal_functions.R
+bb7854176f0e068334e658ae357eb88a *tests/testthat/test-evaluate_internal.R
+5b427e4feaaf58a8c94a8fe9b76f08c5 *tests/testthat/test-internal_functions.R
 1dad4e02a0a150b40966b151e71989f2 *vignettes/tutorial.Rmd
